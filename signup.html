@@ -24,13 +24,13 @@
                 <a class="nav-link" href="#">NOTES</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">ACCOUNT</a>
+                <a class="nav-link" href="./gallery.html">GALLERY</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">NPCs</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">PC SHEETS</a>
+                <a class="nav-link" href="./character-sheets.html">PC SHEETS</a>
               </li>
             </ul>
             <ul class="navbar-nav nav-item d-flex flex-row">
@@ -58,31 +58,7 @@
         </div>
       </div>
 
-      <script>
-        document.getElementById('signup-form').addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const username = document.getElementById('register-username').value;
-          const password = document.getElementById('register-password').value;
-          
-          try {
-            const response = await fetch('/register', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ username, password })
-            });
-            
-            const data = await response.json();
-            if (response.ok) {
-              alert('User registered successfully');
-              window.location.href = 'index.html'; // Redirect to login page
-            } else {
-              alert('User registration failed: ' + data.error);
-            }
-          } catch (error) {
-            alert('An error occurred: ' + error.message);
-          }
-        });
-      </script>
+      
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>

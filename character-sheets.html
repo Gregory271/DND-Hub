@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>D&D Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+
+    <nav id="navigation-menu" class="navbar navbar-expand-lg bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="./index.html">D&D Hub</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-auto">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="./private-notes.html">NOTES</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="./gallery.html">GALLERY</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">NPCs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="./character-sheets.html">PC SHEETS</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav nav-item d-flex flex-row">
+              <li class="nav-item" id="signup-button"><a class = "nav-link" href="./signup.html">SIGNUP</a></li>
+              <li class="nav-item" id="login-button"><a class = "nav-link" href="./index.html">LOGIN</a></li>
+              <li class="nav-item" id="logout-button" style="display: none;"><a class="nav-link" href="#">LOGOUT</a></li>
+              
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div id="countdown-container">
+
+        <h2>NEXT SESSION: </h2><div id="countdown"></div>
+
+        </div>
+        
+
+
+
+      </div>
+
+
+<div id="character-container" class="grid-container">
+    <a href="https://www.dndbeyond.com/characters/90834852" target="_blank"><div class="grid-item">Gigachez<p class="player-class">druid/fighter</p></div></a>
+    <a href="https://www.dndbeyond.com/characters/90834852" target="_blank"><div class="grid-item"><img src="./media/gigachez_old.png"></div></a>
+    <a href="https://www.dndbeyond.com/characters/105085231" target="_blank"><div class="grid-item">Garf<p class="player-class">barbarian/monk</p></div></a>
+    <a href="https://www.dndbeyond.com/characters/105085231" target="_blank"><div class="grid-item"><img src="./media/garf_old.png"></div></a>
+    <a href="https://www.dndbeyond.com/characters/136481133" target="_blank"><div class="grid-item">Clive Standish<p class="player-class">bard</p></div></a>
+    <a href="https://www.dndbeyond.com/characters/136481133" target="_blank"><div class="grid-item"><img src="./media/clive_old.png"></div></a>
+
+</div>
+
+      <script>
+        // Login functionality
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const username = document.getElementById('username').value;
+          const password = document.getElementById('password').value;
+      
+          try {
+            const response = await fetch('/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ username, password })
+            });
+      
+            const data = await response.json();
+            if (response.ok) {
+              localStorage.setItem('token', data.token); // Store token
+              alert('Login successful');
+              window.location.href = 'index.html'; // Reload to apply changes
+            } else {
+              alert('Login failed: ' + data.error);
+            }
+          } catch (error) {
+            alert('An error occurred: ' + error.message);
+          }
+        });
+      
+        // Check if user is logged in
+        function isLoggedIn() {
+          return !!localStorage.getItem('token');
+        }
+      
+        // Get the username from the token
+        function getUsername() {
+          const token = localStorage.getItem('token');
+          if (!token) return null;
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          return payload.username;
+        }
+      
+        // Update the UI based on login status
+        function updateUI() {
+          if (isLoggedIn()) {
+            document.getElementById('login-button').style.display = 'none';
+            document.getElementById('signup-button').style.display = 'none';
+            document.getElementById('logout-button').style.display = 'block';
+            document.getElementById('welcome-message').innerText = `Welcome, ${getUsername()}`;
+            document.getElementById('notes-form').style.display = 'block';
+            fetchNotes();
+          } else {
+            document.getElementById('login-button').style.display = 'block';
+            document.getElementById('signup-button').style.display = 'block';
+            document.getElementById('logout-button').style.display = 'none';
+            document.getElementById('welcome-message').innerText = '';
+            document.getElementById('notes-form').style.display = 'none';
+          }
+        }
+      
+        // Logout functionality
+        document.getElementById('logout-button').addEventListener('click', () => {
+          localStorage.removeItem('token');
+          updateUI();
+        });
+      
+        // Notes form submission
+        document.getElementById('notes-form').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const note = document.getElementById('note').value;
+          const token = localStorage.getItem('token');
+      
+          const response = await fetch('/notes', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ note })
+          });
+      
+          const data = await response.json();
+          if (response.ok) {
+            alert('Note added');
+            fetchNotes();
+          } else {
+            alert('Failed to add note: ' + data.error);
+          }
+        });
+      
+        // Fetch and display user notes
+        async function fetchNotes() {
+          const token = localStorage.getItem('token');
+      
+          const response = await fetch('/notes', {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+      
+          const data = await response.json();
+          if (response.ok) {
+            // Display notes
+            const notesContainer = document.getElementById('notes-container');
+            notesContainer.innerHTML = '';
+            data.forEach(note => {
+              const noteElement = document.createElement('p');
+              noteElement.innerText = note;
+              notesContainer.appendChild(noteElement);
+            });
+          } else {
+            alert('Failed to fetch notes: ' + data.error);
+          }
+        }
+      
+        // Update UI when the page loads
+        document.addEventListener('DOMContentLoaded', updateUI);
+      </script>
+      
+      
+      
+      
+
+
+
+
+
+      
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+        <script src="./script.js"></script>
+      </body>
+</html>
