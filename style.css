@@ -165,17 +165,32 @@ body{
     background-color:black;
 }
 
+#notes-container-outer{
+    height:auto;
+    display:block;
+    position:relative;
+}
+
 #notes-container{
     margin:2em;
-    background-color:rgba(54,49,53,0.3);
+    background-color:rgba(54,49,53,0.7);
     border-radius: 15px;
     overflow:auto;
     max-height:none;
-    width:60%;
+    width:80%;
+    padding:1em;
+    margin-left:auto;
+    margin-right:auto;
+    z-index:2;
+    height:auto;
 }
 
 #notes-container p{
     padding:1em 2em 1em 2em;
+}
+
+#notes-container p,#notes-container ul{
+    font-family:'EB Garamond';
 }
 
 #countdown-container{
@@ -260,7 +275,7 @@ body{
 .login-container{
     background-color:rgba(15,15,15,0.5);
     width:20%;
-    height:20vh;
+    height:auto;
     align-content:center;
     text-align:center;
     border-radius:5%;
@@ -361,11 +376,13 @@ body{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(10, 1fr);
-    gap: 8px;
+    box-sizing:border-box;
     width:90%;
     margin-left:auto;
     margin-right:auto;
     z-index:2;
+    object-fit:center;
+    overflow:hidden;
 }
 
 .gallery-grid div{
@@ -375,8 +392,8 @@ body{
 }
 
 .gallery-grid img{
-    width:auto;
-    height:40vh;
+    width:100%;
+    height:auto;
 
 }
 
@@ -389,6 +406,8 @@ footer{
     text-align:center;
     bottom:0;
     z-index:2;
+    position:relative;
+    display:block;
 }
 
 footer a{
@@ -396,6 +415,8 @@ footer a{
     padding:0.5em;
     box-sizing:border-box;
     color:inherit;
+    position:relative;
+    display:block;
 }
 
 footer:hover{
@@ -403,32 +424,3 @@ footer:hover{
 }
     
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
