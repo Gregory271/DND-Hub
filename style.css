@@ -3,6 +3,9 @@
     body{
         font-size:16px;
     }
+    .login-container{
+        width:50% !important;
+    }
     
     
 }
@@ -131,10 +134,14 @@ body{
     align-content:center;
 }
 
+.navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(217, 177, 59, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
 
 .login-container{
     background-color:rgba(15,15,15,0.5);
-    width:20vw;
+    width:20%;
     height:20vh;
     align-content:center;
     text-align:center;
@@ -143,6 +150,7 @@ body{
     position:relative;
     margin-left:auto;
     margin-right:auto;
+    font-family: 'EB Garamond';
 }
 .login-container input{
     margin:1em;
