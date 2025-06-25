@@ -232,12 +232,9 @@ body{
     height:100%;
 }
 
-
-
-
 .banner-image{
-    width:100vw;
-    height:70vh;
+    width:100%;
+    height:70%;
     margin-left:0;
     margin-right:0;
     background-image:url('./media/mad-mage-banner.jpg');
