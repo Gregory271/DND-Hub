@@ -1,16 +1,15 @@
 console.log("Script loaded");
 
 function getNextSessionDate() {
+  // Get current time in NY
   const now = new Date();
-
-  // Convert current time to EST/EDT (America/New_York handles DST)
   const nowInNY = new Date(now.toLocaleString("en-US", { timeZone: "America/New_York" }));
 
-  const dayOfWeek = nowInNY.getDay(); // 0=Sun, 1=Mon, ..., 4=Thu
+  // Find next Thursday
+  const dayOfWeek = nowInNY.getDay(); // 0=Sun, ..., 4=Thu
   const hour = nowInNY.getHours();
   const minute = nowInNY.getMinutes();
 
-  // Calculate days until next Thursday
   let daysUntilThursday = (4 - dayOfWeek + 7) % 7;
   // If today is Thursday and before 6:30 PM, use today
   if (daysUntilThursday === 0 && (hour < 18 || (hour === 18 && minute < 30))) {
@@ -19,13 +18,15 @@ function getNextSessionDate() {
     daysUntilThursday = 7;
   }
 
-  // Next session date in NY time
+  // Build the next session date in NY time
   const nextSessionNY = new Date(nowInNY);
   nextSessionNY.setDate(nowInNY.getDate() + daysUntilThursday);
   nextSessionNY.setHours(18, 30, 0, 0); // 6:30 PM
 
-  // Convert back to UTC for countdown calculation
-  const nextSessionUTC = new Date(nextSessionNY.toLocaleString("en-US", { timeZone: "UTC" }));
+  // Now, get the UTC time value for that NY time
+  // This is the key: get the timestamp for NY time, then create a Date in UTC
+  const nextSessionUTC = new Date(nextSessionNY.getTime() + (now.getTime() - nowInNY.getTime()));
+
   return nextSessionUTC;
 }
 
