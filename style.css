@@ -185,6 +185,10 @@ body{
     height:auto;
 }
 
+#notes-container span{
+    color:goldenrod
+}
+
 #notes-container p{
     padding:1em 2em 1em 2em;
 }
@@ -356,6 +360,20 @@ body{
     color:#cccccc;
     font-variant:small-caps;
     width:100%;
+}
+
+.npc-text{
+    font-size:20px;
+    color:#cccccc;
+    font-variant:small-caps;
+    width:100%;
+}
+
+.npc-text ul{
+    font-size:20px;
+}
+.npc-text .grid-item{
+    font-size:20px;
 }
 
 .grid-item{
