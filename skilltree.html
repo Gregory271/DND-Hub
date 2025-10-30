@@ -47,7 +47,7 @@
         </div>
 
         <div class="tree-container">
-            <div class="node0" id="f0">
+            <div class="node0 active-skill" id="f0">
                 <div></div>
                 fire</div>
             <div class="node0" id="a0">
@@ -68,9 +68,12 @@
                 </svg>
                 <br>
                 water</div>
-            <div class="node1" id="f1">chromatic strike</div>
-            <div class="node1" id="f2">chromatic buff/heal</div>
+            <!-- Selectable skill nodes -->
+        <div class="node1 skill-node" id="f1" data-skill="chromatic strike" data-description="With chromatic strikes, all of your melee attacks will be converted to fire damage instead of physical damage.">chromatic strike</div>
+        <div class="node1 skill-node" id="f2" data-skill="chromatic touch" data-description="With chromatic touch, you may touch a creature within 5 foot range, this creature will heal 1d8 immediately, next turn they take half that amount as spellplague fire damage(fire & necrotic)">chromatic touch</div>
         </div>
+
+        <div id="skill-tooltip"></div>
         
 
 
@@ -84,5 +87,6 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="./script.js"></script>
+<script src="./skillTree.js"></script>
       </body>
 </html>
